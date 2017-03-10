@@ -1,0 +1,10 @@
+@(page: String, isLoggedIn: Boolean, user: User)
+
+@main(page, isLoggedIn, user) {
+   <div class="container">
+     <h3>This is the profile page!</h3> 
+     @if(isLoggedIn) {
+        <p>Welcome @user.getName()</p>
+    }    
+   </div>
+}
