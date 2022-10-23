@@ -1,14 +1,27 @@
 # Routes
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
-
++nocsrf
 GET     /                           controllers.Application.index()
+
++nocsrf
 GET     /signup                     controllers.Application.signup()
+
++nocsrf
 POST    /signup                     controllers.Application.postSignup()
+
++nocsrf
 GET     /login                      controllers.Application.login()
+
++nocsrf
 POST    /login                      controllers.Application.postLogin()
+
++nocsrf
 GET     /profile                    controllers.Application.profile()
+
++nocsrf
 GET     /logout                     controllers.Application.logout()
 
 # Map static resources from the /public folder to the /assets URL path
++nocsrf
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

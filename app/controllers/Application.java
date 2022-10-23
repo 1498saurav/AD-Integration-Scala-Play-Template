@@ -1,6 +1,7 @@
 package controllers;
 
 import play.data.Form;
+import play.data.FormFactory;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
@@ -11,8 +12,12 @@ import views.form.LoginFormDetails;
 import views.form.SignUpFormDetails;
 import play.mvc.Security;
 
+import javax.inject.Inject;
+
 public class Application extends Controller {
 
+  @Inject
+  FormFactory formFactory;
   /** Gives Index page */
   public  Result index() {
     return ok(index.render("Home", Authorised.isLoggedIn(ctx()), Authorised.getUserInfo(ctx())));
@@ -20,13 +25,14 @@ public class Application extends Controller {
   
   /**Gives login page */
   public  Result login() {
-    Form<LoginFormDetails> formData = Form.form(LoginFormDetails.class);
+
+    Form<LoginFormDetails> formData = formFactory.form(LoginFormDetails.class);
     return ok(login.render("Login", Authorised.isLoggedIn(ctx()), Authorised.getUserInfo(ctx()), formData));
   }
   
     /**Gives signup page */
   public  Result signup() {
-    Form<SignUpFormDetails> formData = Form.form(SignUpFormDetails.class);
+    Form<SignUpFormDetails> formData = formFactory.form(SignUpFormDetails.class);
     return ok(signup.render("Sign Up", Authorised.isLoggedIn(ctx()), Authorised.getUserInfo(ctx()), formData));
   }
   
@@ -47,7 +53,7 @@ public class Application extends Controller {
   public  Result postLogin() {
 
     // Get the submitted form data from the request object, and run validation.
-    Form<LoginFormDetails> formData = Form.form(LoginFormDetails.class).bindFromRequest();
+    Form<LoginFormDetails> formData = formFactory.form(LoginFormDetails.class).bindFromRequest();
 
     if (formData.hasErrors()) {
       flash("error", "Invalid Login credentials.");
@@ -66,7 +72,7 @@ public class Application extends Controller {
   public  Result postSignup() {
 
     // Get the submitted form data from the request object, and run validation.
-    Form<SignUpFormDetails> formData = Form.form(SignUpFormDetails.class).bindFromRequest();
+    Form<SignUpFormDetails> formData = formFactory.form(SignUpFormDetails.class).bindFromRequest();
 
     if (formData.hasErrors()) {
       flash("error", "Invalid");
